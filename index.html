@@ -2,6 +2,7 @@
     <link rel = 'stylesheet' href = 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'/>
     <script src = 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js'></script>
     <script src = 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
+    <title>WD Piano</title>
 <style type = 'text/css'>
 .key{
     margin: 15px;
@@ -31,11 +32,11 @@
 <div class = 'centered'>Click the keys to play sounds</div>
 <div id = 'control-buttons' class = 'row'></div>
 <div id = 'piano-div' class = 'row centered'></div>
+<div id = 'key-log' class = 'row centered'></div>
 
 </body>
 <script type = 'text/javascript'>
 function buildKeyboard(){
-    // build keyboard onscreen
     keys = ['a','s','d','f','g','h','j','k','l'];
     for (var i=0;i<keys.length;i++){
         key = document.createElement('div');
@@ -46,13 +47,16 @@ function buildKeyboard(){
     }
     keyActions();
 }
-function playSound(){
-    var win = new Audio('./sounds/test.wav');
-    win.play();
+function playSound(key){
+    var sound = new Audio('./sounds/test.wav');
+    sound.play();
+    // add this play to the log
+    oldText = $('#key-log').text();
+    $('#key-log').text(oldText + key);
 }
 function keyActions(){
     $('.key').click(function(){
-        playSound();
+        playSound($(this).text());
     });
 }
 $(document).ready(function(){

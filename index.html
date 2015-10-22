@@ -1,0 +1,62 @@
+<head>
+    <link rel = 'stylesheet' href = 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'/>
+    <script src = 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js'></script>
+    <script src = 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
+<style type = 'text/css'>
+.key{
+    margin: 15px;
+    padding:10px;
+    font-size:20px;
+    border:1px solid rgba(0,0,0,0.1);
+    float:left;
+}
+.key:hover{
+    cursor:pointer;
+}
+.key:active{
+    color:white;
+    background-color:black;
+}
+#piano-div{
+    margin-left:50px;
+    margin-right:50px;
+}
+.centered{
+    text-align:center;
+}
+</style>
+</head>
+<body>
+<h1 class = 'centered'>Welcome to the WD Piano</h1>
+<div class = 'centered'>Click the keys to play sounds</div>
+<div id = 'control-buttons' class = 'row'></div>
+<div id = 'piano-div' class = 'row centered'></div>
+
+</body>
+<script type = 'text/javascript'>
+function buildKeyboard(){
+    // build keyboard onscreen
+    keys = ['a','s','d','f','g','h','j','k','l'];
+    for (var i=0;i<keys.length;i++){
+        key = document.createElement('div');
+        $(key).addClass('key');
+        $(key).attr('id', keys[i]);
+        $(key).text(keys[i].toUpperCase());
+        $('#piano-div').append(key);
+    }
+    keyActions();
+}
+function playSound(){
+    var win = new Audio('./sounds/test.wav');
+    win.play();
+}
+function keyActions(){
+    $('.key').click(function(){
+        playSound();
+    });
+}
+$(document).ready(function(){
+    buildKeyboard();
+});
+</script>
+

@@ -37,18 +37,18 @@
 </body>
 <script type = 'text/javascript'>
 function buildKeyboard(){
-    keys = ['a','s','d','f','g','h','j','k','l'];
-    for (var i=0;i<keys.length;i++){
+    var MAX_KEY = 60;
+    for (var i=1;i<MAX_KEY;i++){
         key = document.createElement('div');
         $(key).addClass('key');
-        $(key).attr('id', keys[i]);
-        $(key).text(keys[i].toUpperCase());
+        $(key).attr('id', i);
+        $(key).text(i);
         $('#piano-div').append(key);
     }
     keyActions();
 }
 function playSound(key){
-    var sound = new Audio('./sounds/test.wav');
+    var sound = new Audio('./sounds/piano/'+key.toString()+'.wav');
     sound.play();
     // add this play to the log
     oldText = $('#key-log').text();

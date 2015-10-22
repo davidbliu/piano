@@ -19,23 +19,41 @@
     background-color:black;
 }
 #piano-div{
-    margin-left:50px;
-    margin-right:50px;
+    display:block;
+    clear:both;
+}
+#key-log{
+    display:block;
+    clear:both;
 }
 .centered{
     text-align:center;
+}
+#control-textarea{
+    margin:15px;
+    min-height:150px;
 }
 </style>
 </head>
 <body>
 <h1 class = 'centered'>Welcome to the WD Piano</h1>
 <div class = 'centered'>Click the keys to play sounds</div>
-<div id = 'control-buttons' class = 'row'></div>
-<div id = 'piano-div' class = 'row centered'></div>
-<div id = 'key-log' class = 'row centered'></div>
+<div class = 'row'>
+    <div class = 'col-md-4' id = 'control-sidebar'>
+        <textarea id = 'control-textarea' class = 'form-control' placeholder = 'create key mappings here'></textarea>
+        <div id = 'key-log'></div>
+    </div>
+    <div class = 'col-md-8' class = 'main-area'>
+        <div id = 'piano-div' class = 'centered'></div>
+    </div>
+</div>
 
 </body>
 <script type = 'text/javascript'>
+var keyMappings = {};
+keyMappings['e']=13;
+keyMappings['y']=43;
+keyMappings['w']=12;
 function buildKeyboard(){
     var MAX_KEY = 60;
     for (var i=1;i<MAX_KEY;i++){

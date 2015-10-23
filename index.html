@@ -10,6 +10,8 @@
     font-size:20px;
     border:1px solid rgba(0,0,0,0.1);
     float:left;
+    width:50px;
+    height:50px;
 }
 .key:hover{
     cursor:pointer;
@@ -19,12 +21,8 @@
     background-color:black;
 }
 #piano-div{
-    display:block;
-    clear:both;
-}
-#key-log{
-    display:block;
-    clear:both;
+    margin-left:100px;
+    margin-right:100px;
 }
 .centered{
     text-align:center;
@@ -38,24 +36,21 @@
 <body>
 <h1 class = 'centered'>Welcome to the WD Piano</h1>
 <div class = 'centered'>Click the keys to play sounds</div>
-<div class = 'row'>
-    <div class = 'col-md-4' id = 'control-sidebar'>
-        <textarea id = 'control-textarea' class = 'form-control' placeholder = 'create key mappings here'></textarea>
-        <div id = 'key-log'></div>
-    </div>
-    <div class = 'col-md-8' class = 'main-area'>
-        <div id = 'piano-div' class = 'centered'></div>
-    </div>
+<div id = 'controls-div' class = 'row centered'>
+    <div class = 'btn btn-default' id = 'playback-btn'>Playback</div>
+
 </div>
+<div id = 'piano-div' class = 'centered row'></div>
 
 </body>
 <script type = 'text/javascript'>
+recording = []; // records keystrokes
 var keyMappings = {};
 keyMappings['e']=13;
 keyMappings['y']=43;
 keyMappings['w']=12;
 function buildKeyboard(){
-    var MAX_KEY = 60;
+    var MAX_KEY = 55;
     for (var i=1;i<MAX_KEY;i++){
         key = document.createElement('div');
         $(key).addClass('key');
@@ -68,17 +63,35 @@ function buildKeyboard(){
 function playSound(key){
     var sound = new Audio('./sounds/piano/'+key.toString()+'.wav');
     sound.play();
-    // add this play to the log
-    oldText = $('#key-log').text();
-    $('#key-log').text(oldText + key);
+    timestamp = new Date().getTime();
+    recording.push({'key':key, 'timestamp': timestamp});
+}
+function keypressActions(){
+    $(document).keypress(function(e){
+        console.log(e.keyCode % 55);
+        playSound((e.keyCode % 55).toString());
+        console.log(new Date().getTime());
+    });
 }
 function keyActions(){
     $('.key').click(function(){
         playSound($(this).text());
     });
 }
+function playbackActions(){
+    $('#playback-btn').click(function(){
+        console.log(recording);
+        playback(recording);
+    });
+}
+function playback(recording){
+    console.log('playing back a recording of length '+recording.length.toString());
+    console.log('this isfucking stupid');
+}
 $(document).ready(function(){
+    playbackActions();
     buildKeyboard();
+    keypressActions();
 });
 </script>
 

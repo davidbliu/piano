@@ -2,6 +2,7 @@
     <link rel = 'stylesheet' href = 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'/>
     <script src = 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js'></script>
     <script src = 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
+    <script src = 'piano.js'></script>
     <title>WD Piano</title>
 <style type = 'text/css'>
 .key{
@@ -31,67 +32,13 @@
     margin:15px;
     min-height:150px;
 }
+.big-image-div{
+    display:none;
+}
 </style>
 </head>
 <body>
 <h1 class = 'centered'>Welcome to the WD Piano</h1>
 <div class = 'centered'>Click the keys to play sounds</div>
-<div id = 'controls-div' class = 'row centered'>
-    <div class = 'btn btn-default' id = 'playback-btn'>Playback</div>
-
-</div>
 <div id = 'piano-div' class = 'centered row'></div>
-
 </body>
-<script type = 'text/javascript'>
-recording = []; // records keystrokes
-var keyMappings = {};
-keyMappings['e']=13;
-keyMappings['y']=43;
-keyMappings['w']=12;
-function buildKeyboard(){
-    var MAX_KEY = 55;
-    for (var i=1;i<MAX_KEY;i++){
-        key = document.createElement('div');
-        $(key).addClass('key');
-        $(key).attr('id', i);
-        $(key).text(i);
-        $('#piano-div').append(key);
-    }
-    keyActions();
-}
-function playSound(key){
-    var sound = new Audio('./sounds/piano/'+key.toString()+'.wav');
-    sound.play();
-    timestamp = new Date().getTime();
-    recording.push({'key':key, 'timestamp': timestamp});
-}
-function keypressActions(){
-    $(document).keypress(function(e){
-        console.log(e.keyCode % 55);
-        playSound((e.keyCode % 55).toString());
-        console.log(new Date().getTime());
-    });
-}
-function keyActions(){
-    $('.key').click(function(){
-        playSound($(this).text());
-    });
-}
-function playbackActions(){
-    $('#playback-btn').click(function(){
-        console.log(recording);
-        playback(recording);
-    });
-}
-function playback(recording){
-    console.log('playing back a recording of length '+recording.length.toString());
-    console.log('this isfucking stupid');
-}
-$(document).ready(function(){
-    playbackActions();
-    buildKeyboard();
-    keypressActions();
-});
-</script>
-

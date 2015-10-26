@@ -32,6 +32,74 @@ keyMap['c'] = '13';
 keyMap['v'] = '14';
 keyMap['b'] = '15';
 keyMap['n'] = '16';
+
+var records = [];
+var minTimestamp = Date.now();
+var layers = [];
+function recordKeystroke(key, records){
+  timestamp = Date.now()-minTimestamp;
+  records.push({'key':key,'timestamp':timestamp});
+  console.log('recorded keystroke '+key+' at '+timestamp.toString());
+}
+function playback(layers){
+  flattened = [];
+  for(var i=0;i<layers.length;i++){
+    for(var j=0;j<layers[i].length;j++){
+      flattened.push(layers[i][j]);
+    }
+  }
+  console.log(flattened);
+  console.log('that was flattened');
+  for(var i=0;i<flattened.length;i++){
+    playSound(flattened[i].key, flattened[i].timestamp);
+  }
+}
+function recordActions(){
+  $('#record-btn').click(function(){
+    console.log('recording records');
+    $('#messages').text('recording...');
+    records.length = 0;
+    minTimestamp = Date.now();
+    playback(layers);
+  });
+}
+function playbackActions(){
+  $('#playback-btn').click(function(){
+    console.log("playback clicked");
+    playback(layers);
+  });
+}
+function createLayersList(){
+  $('#layers-list').html('');
+  for(var i=0;i<layers.length;i++){
+    li = document.createElement('li');
+    $(li).addClass('layer-li');
+    $(li).text('layer '+i.toString()+' ('+layers[i].length.toString()+' notes)');
+    $(li).attr('id', 'layer-'+i.toString());
+    $('#layers-list').append(li);
+  }
+  deleteLayerActions();
+}
+function deleteLayerActions(){
+  $('.layer-li').click(function(){
+    index = $(this).attr('id').split('-')[1].toString();
+    console.log('deleting '+index.toString());
+    layers.splice(index, 1);
+    $(this).remove();
+  });
+}
+function saveActions(){
+  $('#save-btn').click(function(){
+    $('#messages').text('');
+    console.log('saving records');
+    console.log(records);
+    layers.push(records.slice());
+    createLayersList();
+    console.log(layers);
+    records.length = 0;
+  });
+}
+
 function playSong(){
   notes = ["G4", "E4", "E4", "F4", "D4", "D4", "C4", "D4", "E4", "F4", "G4", "G4", "G4", "G4", "E4", "E4", "F4", "D4", "D4", "C4", "E4", "G4", "G4", "C4"];
   delays = [1, 2, 3, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 17, 18, 19, 21, 22, 23, 25, 26, 27, 28, 29].map(function(x){ return x+5});
@@ -73,11 +141,15 @@ function animateKey(key){
 }
 
 function playSound(key, delay){
-  var sound = new Audio(PIANO_DIR+key.toString()+SUFFIX);
-  setTimeout(function(){
-    sound.play();
-    animateKey(key);
-  }, delay);
+  try{
+    var sound = new Audio(PIANO_DIR+key.toString()+SUFFIX);
+    setTimeout(function(){
+      sound.play();
+      animateKey(key);
+    }, delay);
+  }catch(err){
+    console.log(err.message);
+  }
 }
 function activateKeyboard(){
   $(document).keypress(function(e){
@@ -86,6 +158,7 @@ function activateKeyboard(){
       key = keyMap[key];
       showRandomImage();
       playSound(key, 0);
+      recordKeystroke(key, records);
     }
   });
 }
@@ -108,6 +181,10 @@ $(document).ready(function(){
   activateKeyboard();
   drawKeyboard();
   activateSongButton();
+  playbackActions();
+  recordActions();
+  saveActions();
+  deleteLayerActions();
 });
 
 

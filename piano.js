@@ -84,6 +84,7 @@ function activateKeyboard(){
     key = String.fromCharCode(e.keyCode);
     if(Object.keys(keyMap).indexOf(key)!=-1){
       key = keyMap[key];
+      showRandomImage();
       playSound(key, 0);
     }
   });
@@ -92,6 +93,16 @@ function activateSongButton(){
   $('#song-btn').click(function(){
     playSong();
   });
+}
+function showRandomImage(){
+ images = [];
+  images.push('https://scontent.fsnc1-1.fna.fbcdn.net/hphotos-xtf1/t31.0-8/12030465_10153274450151491_3396779585048093138_o.jpg');
+  images.push('https://scontent.fsnc1-1.fna.fbcdn.net/hphotos-xpf1/t31.0-8/12182790_10153274450126491_5440527320823729810_o.jpg');
+  images.push('https://scontent.fsnc1-1.fna.fbcdn.net/hphotos-xtp1/t31.0-8/12182887_10153274449991491_553158657372515922_o.jpg');
+  images.push('https://scontent.fsnc1-1.fna.fbcdn.net/hphotos-xpf1/t31.0-8/12185202_10153274449906491_3225495742505052429_o.jpg');
+  img_url = images[Math.floor(Math.random()*images.length)];
+  $('#center-img').attr('src', img_url);
+  $('#image-div').fadeIn(75).fadeOut(75);
 }
 $(document).ready(function(){
   activateKeyboard();

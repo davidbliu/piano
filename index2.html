@@ -1,0 +1,68 @@
+<head>
+  <title>WD Piano</title>
+  <link rel='stylesheet' href = 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
+  <script src = 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js'></script>
+  <script src = 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
+  <style type = 'text/css'>
+    .key{
+      border: 1px solid black;
+      height: 30px;
+      width: 30px;
+      text-align:center;
+      float: left;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Welcome to the WD Piano</h1>
+
+  <div id = 'piano-div'>
+  </div>
+</body>
+
+<script type = 'text/javascript'>
+var PIANO_DIR = './piano-sounds/';
+var SUFFIX = '.mp3';
+
+var keyMap = {};
+keyMap['a'] = '1';
+keyMap['s'] = '2';
+keyMap['d'] = '3';
+keyMap['f'] = '4';
+keyMap['g'] = '5';
+keyMap['q'] = 'A5';
+keyMap['w'] = 'B6';
+keyMap['x'] = 'dwm';
+
+function drawPiano(){
+  keys = Object.keys(keyMap);
+  for(var i=0;i<keys.length;i++){
+    div = document.createElement('div');
+    $(div).addClass('key');
+    $(div).attr('id', keys[i]);
+    $(div).text(keys[i]);
+    $('#piano-div').append(div);
+  }
+}
+function playSound(key){
+  var sound = new Audio(PIANO_DIR+key.toString()+SUFFIX);
+  sound.play();
+}
+function activateKeys(){
+  $(document).keypress(function(e){
+    key = String.fromCharCode(e.keyCode);
+    if(Object.keys(keyMap).indexOf(key)!=-1){
+      playSound(keyMap[key]);
+      animateKey(key);
+    }
+  });
+}
+function animateKey(key){
+  $('#'+key).fadeOut(100).fadeIn(100);
+}
+$(document).ready(function(){
+  drawPiano();
+  activateKeys();
+});
+</script>

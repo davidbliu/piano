@@ -1,8 +1,7 @@
 <head>
   <title>WD Piano</title>
-  <link rel='stylesheet' href = 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
+ <!--bootstrap, jquery -->
   <script src = 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js'></script>
-  <script src = 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
   <style type = 'text/css'>
     .key{
       border: 1px solid black;
@@ -16,15 +15,13 @@
 
 <body>
   <h1>Welcome to the WD Piano</h1>
-
-  <div id = 'piano-div'>
+ <div id = 'piano-div'>
   </div>
-</body>
+  
 
 <script type = 'text/javascript'>
 var PIANO_DIR = './piano-sounds/';
 var SUFFIX = '.mp3';
-
 var keyMap = {};
 keyMap['a'] = '1';
 keyMap['s'] = '2';
@@ -66,3 +63,4 @@ $(document).ready(function(){
   activateKeys();
 });
 </script>
+</body>

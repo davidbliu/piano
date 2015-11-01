@@ -101,13 +101,13 @@ function saveActions(){
 }
 
 function playSong(){
-  notes = ["G4", "E4", "E4", "F4", "D4", "D4", "C4", "D4", "E4", "F4", "G4", "G4", "G4", "G4", "E4", "E4", "F4", "D4", "D4", "C4", "E4", "G4", "G4", "C4"];
+  notes = ["G5", "E5", "E5", "F5", "D5", "D5", "C5", "D5", "E5", "F5", "G5", "G5", "G5", "G5", "E5", "E5", "F5", "D5", "D5", "C5", "E5", "G5", "G5", "C5"];
   delays = [1, 2, 3, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 17, 18, 19, 21, 22, 23, 25, 26, 27, 28, 29].map(function(x){ return x+5});
   timeFactor = 350; 
   for(var i=0;i<notes.length;i++){
     playSound(notes[i], delays[i]*timeFactor);
   }
-  //drum each beat
+  drum each beat
   for(var i=1;i<40;i++){
     if(i%2!=0){
       playSound('10', i*timeFactor);
@@ -156,7 +156,7 @@ function activateKeyboard(){
     key = String.fromCharCode(e.keyCode);
     if(Object.keys(keyMap).indexOf(key)!=-1){
       key = keyMap[key];
-      showRandomImage();
+      //showRandomImage();
       playSound(key, 0);
       recordKeystroke(key, records);
     }

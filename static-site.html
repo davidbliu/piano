@@ -1,0 +1,79 @@
+<html>
+<head>
+<style type = 'text/css'>
+img{
+	opacity: 0.5;
+}
+img:hover{
+	opacity:1.0;
+}
+</style>
+
+<script src = 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js'></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+	<h1>David Liu's website</h1>
+	<p>Sentence 1. Sentence 2.</p>
+	<div id = 'add-btn' class = 'btn btn-default btn-danger'>Add a new image to my glorious siteeeeeeeee</div>
+	<div id = 'bigger-btn' class = 'btn btn-primary'>Bigger</div>
+	<div id = 'smaller-btn' class = 'btn btn-default'>Smaller</div>
+	<h2>This is my image gallery</h2>	
+	<div id = 'gallery'></div>
+</body>
+
+<script type = 'text/javascript'>
+var imgHeight = 200;
+var imageURLs = [];
+for(var i=0;i<10;i++){
+	imageURLs.push('http://thecatapi.com/api/images/get?image_id='+i.toString()+'sm');
+}
+function respondToClick(){
+	$('#add-btn').click(function(){
+		//ask the user for url, and display that in my gallery as an img
+		var url = prompt("Please enter your URL", "");
+
+		if (url != null) {
+			addImageToGallery(url);
+		}
+	});
+}
+function respondToResize(){
+	$('#bigger-btn').click(function(){
+		imgHeight = imgHeight + 100;
+		resizeImages();
+	});
+	$('#smaller-btn').click(function(){
+		imgHeight = imgHeight - 100;
+		resizeImages();
+	});
+}
+function resizeImages(){
+	$('img').each(function(){
+		$(this).css('height', imgHeight);
+	});
+}
+function addImageToGallery(url){
+	var img = document.createElement('img');
+	$(img).attr('src', url);
+	$(img).css('height', imgHeight);
+	var a = document.createElement('a');
+	$(a).attr('href', 'http://pbl.link/rickroll');
+	$(a).append(img);
+	$('#gallery').prepend(a);
+}
+
+$(document).ready(function(){
+	//create cat image gallery
+	for(var i=0;i<imageURLs.length;i++){
+		addImageToGallery(imageURLs[i]);
+	}
+	respondToClick();
+	respondToResize();
+});
+</script>
+</html>

@@ -1,0 +1,69 @@
+<html>
+<head>
+  <link rel = 'stylesheet' href = './lib/bootstrap.min.css'>
+  <script src = './lib/jquery.min.js'></script>
+  <script src = 'data.js'></script>
+    <script src = 'piano.js'></script>
+    <title>WD Piano</title>
+<style type = 'text/css'>
+.key{
+    margin: 15px;
+    padding:10px;
+    font-size:20px;
+    border:1px solid rgba(0,0,0,0.1);
+    float:left;
+    width:50px;
+    height:50px;
+}
+#piano-div{
+  text-align:center;
+    width:50%;
+  margin-left:25%;
+  margin-right:25%;
+}
+.centered{
+    text-align:center;
+}
+#control-textarea{
+    margin:15px;
+    min-height:150px;
+}
+.big-image-div{
+    display:none;
+}
+#image-div{
+  display:none;
+  position:fixed;
+  text-align:center;
+    width:100%;
+}
+.layers-div{
+  position:fixed;
+    float:left;
+}
+#messages{
+  font-size:20px;
+    color:blue;
+}
+
+</style>
+</head>
+<body>
+  <div id = 'image-div'><img id = 'center-img' src = 'http://thecatapi.com/api/images/get?format=src&type=gif' alt = 'something' height = 300/></div>
+<h1 class = 'centered'>Welcome to the WD Pad</h1>
+<div class = 'centered'>Click the keys to play sounds</div>
+<div class = 'centered' id ='messages'></div>
+<div class = '' id = 'layers-div'>
+  <ul id = 'layers-list'>
+  </ul>
+</div>
+<div class = 'centered'>
+  <div class = 'btn btn-default' id = 'song-btn'>Demo Song</div>
+  <div class = 'btn btn-default' id = 'playback-btn'>Playback</div>
+  <div class = 'btn btn-default' id = 'record-btn'>Record</div>
+  <div class = 'btn btn-default' id = 'save-btn'>Save</div>
+</div>
+<div id = 'piano-div' class = 'centered row'></div>
+<div id = 'audio-container'></div>
+</body>
+</html>

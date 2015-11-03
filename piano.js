@@ -1,5 +1,7 @@
 var keys = {};
 var playingSet = new Set();
+var shiftCode = 16;
+var shiftDown = false;
 
 function insertAudio(){
 }
@@ -11,7 +13,7 @@ function drawKeyboard(){
     div = document.createElement('div');
     $(div).addClass('key');
     $(div).attr('id', key);
-    $(div).text(String.fromCharCode(key));
+    $(div).text(String.fromCharCode(key).toLowerCase());
     $('#piano-div').append(div);
 
     //insert audio 
@@ -63,18 +65,22 @@ function activateKeyboardClick(){
 function activateKeyboard(){
   $(document).keydown(function(e){
     key = e.keyCode.toString();
-    console.log(key+'down');
     if(Object.keys(keyMap).indexOf(key)!=-1){
       startSound(key+'-audio');
       colorKey(key);
     }
+    else if(key == shiftCode.toString()){
+      shiftDown = true;
+    }
   });
   $(document).keyup(function(e){
     key = e.keyCode.toString();
-    console.log(key+'up');
-    if(Object.keys(keyMap).indexOf(key)!=-1){
+    if(Object.keys(keyMap).indexOf(key)!=-1 && !shiftDown){
       stopSound(key+'-audio');
       uncolorKey(key);
+    }
+    else if(key == shiftCode.toString()){
+      shiftDown = false;
     }
   });
 }
